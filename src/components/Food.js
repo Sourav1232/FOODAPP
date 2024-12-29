@@ -36,34 +36,27 @@ const Food = () => {
     }
   };
 
-  const handleCameraCapture = async () => {
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-      const videoElement = document.createElement("video");
-      videoElement.srcObject = stream;
-      videoElement.play();
-
-      const canvas = document.createElement("canvas");
-      const context = canvas.getContext("2d");
-
-      videoElement.addEventListener("canplay", () => {
-        canvas.width = videoElement.videoWidth;
-        canvas.height = videoElement.videoHeight;
-        context.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
-        canvas.toBlob(
-          (blob) => {
-            setImage(blob);
-            setImagePreview(canvas.toDataURL("image/jpeg"));
-            stream.getTracks().forEach((track) => track.stop());
-          },
-          "image/jpeg"
-        );
-      });
-    } catch (error) {
-      console.error("Error accessing camera:", error);
-      alert("Unable to access camera. Please check permissions.");
-    }
+  const handleCameraCapture = () => {
+    // Create an invisible file input element
+    const fileInput = document.createElement('input');
+    fileInput.type = 'file';
+    fileInput.accept = 'image/*';
+    fileInput.capture = 'camera'; // This will attempt to open the native camera app
+  
+    fileInput.onchange = (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        setImage(file);
+        setImagePreview(URL.createObjectURL(file));
+      } else {
+        alert("No file selected. Please capture an image.");
+      }
+    };
+  
+    // Trigger the file input click to open the camera
+    fileInput.click();
   };
+  
 
   const getLocation = () => {
     return new Promise((resolve, reject) => {
