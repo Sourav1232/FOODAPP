@@ -110,7 +110,6 @@ const Home = () => {
     <div className="home">
       <header className="home-header">
         <h1>INVENTORY MANAGEMENT SYSTEM</h1>
-        <div className="user-icon">A</div>
       </header>
 
       {error ? (
