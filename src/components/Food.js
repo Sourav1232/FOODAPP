@@ -12,7 +12,7 @@ const firebaseConfig = {
   storageBucket: "foodai-7ebf0.firebasestorage.app",
   messagingSenderId: "1802738846",
   appId: "1:1802738846:web:f6985b95b8487ce3c7ef8f",
-  measurementId: "G-QJWXCZ7Y56"
+  measurementId: "G-QJWXCZ7Y56",
 };
 
 // Initialize Firebase
@@ -42,21 +42,21 @@ const Food = () => {
     fileInput.type = 'file';
     fileInput.accept = 'image/*';
     fileInput.capture = 'camera'; // This will attempt to open the native camera app
-  
+
     fileInput.onchange = (e) => {
-      const file = e.target.files[0];
+      const file = e.target.files[0]; // Get the file selected (the captured image)
       if (file) {
-        setImage(file);
-        setImagePreview(URL.createObjectURL(file));
+        setImage(file); // Store the file in the state
+        setImagePreview(URL.createObjectURL(file)); // Show the image preview
+        console.log("Captured image:", file); // Log to confirm the file is selected
       } else {
         alert("No file selected. Please capture an image.");
       }
     };
-  
+
     // Trigger the file input click to open the camera
     fileInput.click();
   };
-  
 
   const getLocation = () => {
     return new Promise((resolve, reject) => {
@@ -135,17 +135,7 @@ const Food = () => {
       );
 
       if (!response.ok) {
-        if (response.status === 404) {
-          throw new Error(
-            "The analysis endpoint was not found. Please check the backend URL."
-          );
-        } else if (response.status === 500) {
-          throw new Error(
-            "The server encountered an error. Please try again later."
-          );
-        } else {
-          throw new Error("Unexpected server error.");
-        }
+        throw new Error("Error analyzing food. Please try again.");
       }
 
       const data = await response.json();
@@ -154,46 +144,12 @@ const Food = () => {
         throw new Error("Analysis failed. No result returned.");
       }
 
-      // Extract relevant information from the response
-      const {
-        category,
-        type,
-        count,
-        temperature,
-        humidity,
-        exp_date,
-      } = data.meta_data;
-
-      const summary = {
-        category,
-        type,
-        count,
-        temperature,
-        humidity,
-        exp_date,
-        analysis: data.response,
-      };
-
-      // Display the result in a concise format
-      setResult(summary);
+      // Display the result
+      setResult(data);
       setError(null);
     } catch (error) {
       console.error("Error during upload or analysis:", error);
-
-      setError(
-        error.message.includes("Image upload failed")
-          ? "Error uploading the image. Please ensure the image is valid and try again."
-          : error.message.includes("Invalid image URL")
-          ? "Image link generation failed. Please try uploading the image again."
-          : error.message.includes("Geolocation")
-          ? "Unable to fetch location. Please ensure location services are enabled."
-          : error.message.includes("Failed to analyze")
-          ? "Error analyzing food. Please try again."
-          : error.message.includes("The analysis endpoint")
-          ? "Analysis service is unavailable. Please contact support."
-          : "An unknown error occurred. Please try again."
-      );
-
+      setError("An error occurred. Please try again.");
       setResult(null);
     } finally {
       setIsLoading(false); // Stop loading
@@ -228,7 +184,6 @@ const Food = () => {
       alert("No analysis result to add to inventory.");
     }
   };
-  
 
   return (
     <div className="food-container">
