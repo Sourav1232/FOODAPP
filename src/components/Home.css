@@ -143,7 +143,7 @@ html, body {
   display: flex;
   justify-content: space-between;
   margin-top: 20px;
-  flex-wrap: wrap;  /* Allow wrapping for smaller screens */
+  flex-wrap: wrap;
   gap: 10px; /* Ensure there is a gap between the two cards */
 }
 
@@ -152,7 +152,7 @@ html, body {
   margin: 10px;
   padding: 20px;
   border-radius: 10px;
-  width: 48%;  /* Set width to 48% to make two boxes side by side */
+  width: 48%;
   max-width: 180px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   box-sizing: border-box;
@@ -187,11 +187,11 @@ html, body {
   }
 
   .info-box {
-    width: 48%; /* Ensure the two cards fit side by side */
+    width: 48%;
   }
 
   .additional-info {
-    flex-direction: row; /* Ensure side by side layout */
+    flex-direction: row;
     justify-content: space-between;
     flex-wrap: wrap;
   }
@@ -221,7 +221,7 @@ html, body {
   }
 
   .info-box {
-    width: 100%; /* Full width on smaller mobile screens */
+    width: 45%; /* Make the cards smaller on very small screens */
     margin: 10px 0;
   }
 
