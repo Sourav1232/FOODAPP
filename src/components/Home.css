@@ -12,8 +12,8 @@ html, body {
   text-align: center;
   padding: 20px;
   width: 85%;
-  max-width: 500px; /* Max-width to emulate mobile-like appearance */
-  margin: 0 auto; /* Center horizontally with no vertical margin */
+  max-width: 500px;
+  margin: 0 auto;
   position: relative;
   top: 0;
 }
@@ -27,7 +27,7 @@ html, body {
   position: relative;
   text-align: center;
   border-radius: 10px;
-  overflow: hidden; /* Ensure the rounded corners affect the image */
+  overflow: hidden;
 }
 
 .home-header h1 {
@@ -71,10 +71,10 @@ html, body {
   margin: 20px auto;
   padding: 20px;
   border-radius: 10px;
-  width: 100%; /* Ensure the card takes up full width */
-  max-width: 400px; /* Adjust max-width for responsiveness */
+  width: 100%;
+  max-width: 400px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  box-sizing: border-box; /* Prevent overflow */
+  box-sizing: border-box;
 }
 
 .inventory-summary h2 {
@@ -138,11 +138,13 @@ html, body {
   background-color: #e74c3c;
 }
 
+/* Additional Info Flexbox Layout */
 .additional-info {
   display: flex;
   justify-content: space-between;
   margin-top: 20px;
-  flex-wrap: wrap;
+  flex-wrap: wrap;  /* Allow wrapping for smaller screens */
+  gap: 10px; /* Ensure there is a gap between the two cards */
 }
 
 .info-box {
@@ -150,7 +152,7 @@ html, body {
   margin: 10px;
   padding: 20px;
   border-radius: 10px;
-  width: 45%;  /* Ensure side-by-side layout */
+  width: 48%;  /* Set width to 48% to make two boxes side by side */
   max-width: 180px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   box-sizing: border-box;
@@ -174,8 +176,8 @@ html, body {
   }
 
   .inventory-summary {
-    width: 100%; /* Full width on mobile */
-    max-width: none; /* No max-width to avoid overflow */
+    width: 100%;
+    max-width: none;
     padding: 15px;
   }
 
@@ -185,11 +187,11 @@ html, body {
   }
 
   .info-box {
-    width: 48%; /* Ensures that two boxes can fit side by side */
+    width: 48%; /* Ensure the two cards fit side by side */
   }
 
   .additional-info {
-    flex-direction: row; /* Make the boxes appear side by side on mobile */
+    flex-direction: row; /* Ensure side by side layout */
     justify-content: space-between;
     flex-wrap: wrap;
   }
@@ -219,7 +221,7 @@ html, body {
   }
 
   .info-box {
-    width: 100%; /* Full width for mobile screens */
+    width: 100%; /* Full width on smaller mobile screens */
     margin: 10px 0;
   }
 
