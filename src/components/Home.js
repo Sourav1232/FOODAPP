@@ -128,16 +128,16 @@ const Home = () => {
             </div>
             <div className="legend">
               <div>
-                <span className="dot others"></span> OTHERS ({inventoryData.categories.others})
+                <span className="dot others"></span> Others ({inventoryData.categories.others})
               </div>
               <div>
-                <span className="dot fruits"></span> FRUITS ({inventoryData.categories.fruits})
+                <span className="dot fruits"></span> Fruits ({inventoryData.categories.fruits})
               </div>
               <div>
-                <span className="dot dairy"></span> DAIRY ({inventoryData.categories.dairy})
+                <span className="dot dairy"></span> Dairy ({inventoryData.categories.dairy})
               </div>
               <div>
-                <span className="dot vegetables"></span> VEGETABLES ({inventoryData.categories.vegetables})
+                <span className="dot vegetables"></span> Vegetables ({inventoryData.categories.vegetables})
               </div>
             </div>
           </div>
