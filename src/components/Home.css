@@ -12,7 +12,7 @@ html, body {
   text-align: center;
   padding: 20px;
   width: 85%;
-  max-width: 500px; /* Set max-width to emulate mobile-like appearance */
+  max-width: 500px; /* Max-width to emulate mobile-like appearance */
   margin: 0 auto; /* Center horizontally with no vertical margin */
   position: relative;
   top: 0;
@@ -71,9 +71,10 @@ html, body {
   margin: 20px auto;
   padding: 20px;
   border-radius: 10px;
-  width: 100%;
-  max-width: 400px;
+  width: 100%; /* Ensure the card takes up full width */
+  max-width: 400px; /* Adjust max-width for responsiveness */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box; /* Prevent overflow */
 }
 
 .inventory-summary h2 {
@@ -149,7 +150,7 @@ html, body {
   margin: 10px;
   padding: 20px;
   border-radius: 10px;
-  width: 45%;  /* 45% width for side-by-side cards */
+  width: 45%;  /* Ensure side-by-side layout */
   max-width: 180px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   box-sizing: border-box;
@@ -173,7 +174,8 @@ html, body {
   }
 
   .inventory-summary {
-    width: 100%;
+    width: 100%; /* Full width on mobile */
+    max-width: none; /* No max-width to avoid overflow */
     padding: 15px;
   }
 
@@ -183,17 +185,13 @@ html, body {
   }
 
   .info-box {
-    width: 48%; /* Adjust to take up more space on mobile */
+    width: 48%; /* Ensures that two boxes can fit side by side */
   }
 
   .additional-info {
-    flex-direction: column; /* Stack info boxes vertically on smaller screens */
-    align-items: center;
-  }
-
-  .info-box {
-    width: 80%; /* Make info-boxes wider on small screens */
-    margin: 10px 0; /* Stack them vertically */
+    flex-direction: row; /* Make the boxes appear side by side on mobile */
+    justify-content: space-between;
+    flex-wrap: wrap;
   }
 }
 
@@ -221,8 +219,8 @@ html, body {
   }
 
   .info-box {
-    width: 100%; /* Ensure full-width stacking */
-    margin: 10px 0; /* Stack info boxes vertically */
+    width: 100%; /* Full width for mobile screens */
+    margin: 10px 0;
   }
 
   .item-count {
