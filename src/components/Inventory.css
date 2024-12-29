@@ -17,6 +17,8 @@
   background-position: center;
   background-repeat: no-repeat;
   position: relative;
+  border-radius: 15px; /* Smooth rounded corners */
+  overflow: hidden; /* Ensure the image respects the rounded corners */
 }
 
 .inventory-header::before {
@@ -28,6 +30,7 @@
   height: 100%;
   background: rgba(0, 0, 0, 0.4);
   z-index: -1;
+  border-radius: 15px; /* Apply border radius to the pseudo-element for consistency */
 }
 
 .inventory-header h1 {
