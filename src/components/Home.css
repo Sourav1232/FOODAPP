@@ -71,7 +71,7 @@ html, body {
   margin: 20px auto;
   padding: 20px;
   border-radius: 10px;
-  width: 90%;
+  width: 100%;
   max-width: 400px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -139,9 +139,9 @@ html, body {
 
 .additional-info {
   display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
+  justify-content: space-between;
   margin-top: 20px;
+  flex-wrap: wrap;
 }
 
 .info-box {
@@ -149,7 +149,7 @@ html, body {
   margin: 10px;
   padding: 20px;
   border-radius: 10px;
-  width: 45%;
+  width: 45%;  /* 45% width for side-by-side cards */
   max-width: 180px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   box-sizing: border-box;
@@ -185,6 +185,16 @@ html, body {
   .info-box {
     width: 48%; /* Adjust to take up more space on mobile */
   }
+
+  .additional-info {
+    flex-direction: column; /* Stack info boxes vertically on smaller screens */
+    align-items: center;
+  }
+
+  .info-box {
+    width: 80%; /* Make info-boxes wider on small screens */
+    margin: 10px 0; /* Stack them vertically */
+  }
 }
 
 /* Smaller Mobile Screens (Up to 480px) */
@@ -211,8 +221,8 @@ html, body {
   }
 
   .info-box {
-    width: 100%;
-    margin: 10px 0; /* Stack info-boxes vertically */
+    width: 100%; /* Ensure full-width stacking */
+    margin: 10px 0; /* Stack info boxes vertically */
   }
 
   .item-count {
