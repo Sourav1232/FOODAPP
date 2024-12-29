@@ -1,4 +1,5 @@
-body, html {
+/* Reset body and html to eliminate top space */
+html, body {
     margin: 0;
     padding: 0;
     height: 100%;
@@ -20,8 +21,10 @@ body, html {
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);  /* Soft shadow for depth */
     max-width: 400px;  /* Maximum width for the container */
     margin: 0 auto;
+    width: 100%; /* Allow full width in smaller screens */
 }
 
+/* Header section adjustment */
 .chat-header {
     width: 100%;
     text-align: center;
@@ -42,6 +45,7 @@ body, html {
     letter-spacing: 1px;
 }
 
+/* Description text adjustments */
 .chat-description {
     font-size: 1rem;
     margin: 15px 0 25px;
@@ -51,6 +55,7 @@ body, html {
     color: #333;
 }
 
+/* Chat history (messages) */
 .chat-history {
     flex: 1;
     width: 100%;
@@ -65,6 +70,7 @@ body, html {
     border: 1px solid #ddd;
 }
 
+/* Scrollbar customization */
 .chat-history::-webkit-scrollbar {
     width: 8px;
 }
@@ -74,6 +80,7 @@ body, html {
     border-radius: 10px;
 }
 
+/* Chat bubble styles */
 .chat-bubble {
     margin: 10px 0;
     padding: 12px 18px;
@@ -90,6 +97,7 @@ body, html {
     transform: translateX(5px);
 }
 
+/* User and bot message styles */
 .user {
     background-color: #dcf8c6;
     align-self: flex-end;
@@ -105,6 +113,7 @@ body, html {
     border-radius: 20px;
 }
 
+/* Input area styling */
 .chat-input-area {
     display: flex;
     width: 100%;
@@ -114,6 +123,7 @@ body, html {
     justify-content: space-between;
 }
 
+/* Chat input field */
 .chat-input {
     flex: 1;
     padding: 15px;
@@ -130,6 +140,7 @@ body, html {
     outline: none;
 }
 
+/* Button styling */
 button {
     padding: 15px 25px;
     font-size: 1rem;
@@ -181,5 +192,39 @@ button:active {
 
     button {
         padding: 10px 20px;
+    }
+}
+
+/* Further adjustments for very small screens */
+@media (max-width: 480px) {
+    .chat-container {
+        padding: 10px;
+    }
+
+    .chat-header {
+        padding: 30px 0;
+    }
+
+    .chat-header h1 {
+        font-size: 1.6rem;
+    }
+
+    .chat-description {
+        font-size: 0.8rem;
+    }
+
+    .chat-bubble {
+        padding: 8px 12px;
+        font-size: 0.9rem;
+    }
+
+    .chat-input {
+        padding: 12px;
+        font-size: 0.8rem;
+    }
+
+    button {
+        padding: 8px 18px;
+        font-size: 0.9rem;
     }
 }
