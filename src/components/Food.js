@@ -12,7 +12,7 @@ const firebaseConfig = {
   storageBucket: "foodai-7ebf0.firebasestorage.app",
   messagingSenderId: "1802738846",
   appId: "1:1802738846:web:f6985b95b8487ce3c7ef8f",
-  measurementId: "G-QJWXCZ7Y56",
+  measurementId: "G-QJWXCZ7Y56"
 };
 
 // Initialize Firebase
@@ -22,7 +22,6 @@ const database = getDatabase(app);
 const Food = () => {
   const [image, setImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
-  const [imageName, setImageName] = useState(""); // State to store image name
   const [result, setResult] = useState(null);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false); // Track loading state
@@ -32,33 +31,38 @@ const Food = () => {
     if (file) {
       setImage(file);
       setImagePreview(URL.createObjectURL(file));
-      setImageName(file.name); // Set the file name after upload
     } else {
       alert("No file selected. Please choose an image.");
     }
   };
 
-  const handleCameraCapture = () => {
-    // Create an invisible file input element
-    const fileInput = document.createElement('input');
-    fileInput.type = 'file';
-    fileInput.accept = 'image/*';
-    fileInput.capture = 'camera'; // This will attempt to open the native camera app
+  const handleCameraCapture = async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+      const videoElement = document.createElement("video");
+      videoElement.srcObject = stream;
+      videoElement.play();
 
-    fileInput.onchange = (e) => {
-      const file = e.target.files[0]; // Get the file selected (the captured image)
-      if (file) {
-        setImage(file); // Store the file in the state
-        setImagePreview(URL.createObjectURL(file)); // Show the image preview
-        setImageName(file.name); // Set the file name after capture
-        console.log("Captured image:", file); // Log to confirm the file is selected
-      } else {
-        alert("No file selected. Please capture an image.");
-      }
-    };
+      const canvas = document.createElement("canvas");
+      const context = canvas.getContext("2d");
 
-    // Trigger the file input click to open the camera
-    fileInput.click();
+      videoElement.addEventListener("canplay", () => {
+        canvas.width = videoElement.videoWidth;
+        canvas.height = videoElement.videoHeight;
+        context.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
+        canvas.toBlob(
+          (blob) => {
+            setImage(blob);
+            setImagePreview(canvas.toDataURL("image/jpeg"));
+            stream.getTracks().forEach((track) => track.stop());
+          },
+          "image/jpeg"
+        );
+      });
+    } catch (error) {
+      console.error("Error accessing camera:", error);
+      alert("Unable to access camera. Please check permissions.");
+    }
   };
 
   const getLocation = () => {
@@ -138,7 +142,17 @@ const Food = () => {
       );
 
       if (!response.ok) {
-        throw new Error("Error analyzing food. Please try again.");
+        if (response.status === 404) {
+          throw new Error(
+            "The analysis endpoint was not found. Please check the backend URL."
+          );
+        } else if (response.status === 500) {
+          throw new Error(
+            "The server encountered an error. Please try again later."
+          );
+        } else {
+          throw new Error("Unexpected server error.");
+        }
       }
 
       const data = await response.json();
@@ -147,12 +161,46 @@ const Food = () => {
         throw new Error("Analysis failed. No result returned.");
       }
 
-      // Display the result
-      setResult(data);
+      // Extract relevant information from the response
+      const {
+        category,
+        type,
+        count,
+        temperature,
+        humidity,
+        exp_date,
+      } = data.meta_data;
+
+      const summary = {
+        category,
+        type,
+        count,
+        temperature,
+        humidity,
+        exp_date,
+        analysis: data.response,
+      };
+
+      // Display the result in a concise format
+      setResult(summary);
       setError(null);
     } catch (error) {
       console.error("Error during upload or analysis:", error);
-      setError("An error occurred. Please try again.");
+
+      setError(
+        error.message.includes("Image upload failed")
+          ? "Error uploading the image. Please ensure the image is valid and try again."
+          : error.message.includes("Invalid image URL")
+          ? "Image link generation failed. Please try uploading the image again."
+          : error.message.includes("Geolocation")
+          ? "Unable to fetch location. Please ensure location services are enabled."
+          : error.message.includes("Failed to analyze")
+          ? "Error analyzing food. Please try again."
+          : error.message.includes("The analysis endpoint")
+          ? "Analysis service is unavailable. Please contact support."
+          : "An unknown error occurred. Please try again."
+      );
+
       setResult(null);
     } finally {
       setIsLoading(false); // Stop loading
@@ -164,7 +212,6 @@ const Food = () => {
     setImagePreview(null);
     setResult(null);
     setError(null);
-    setImageName(""); // Reset image name when resetting
   };
 
   const addToInventory = () => {
@@ -188,6 +235,7 @@ const Food = () => {
       alert("No analysis result to add to inventory.");
     }
   };
+  
 
   return (
     <div className="food-container">
@@ -209,18 +257,6 @@ const Food = () => {
           📷 Capture from Camera
         </button>
       </div>
-
-      {/* Image preview or name */}
-      <div className="file-preview">
-        {imagePreview ? (
-          <img className="image-preview" src={imagePreview} alt="Captured" />
-        ) : imageName ? (
-          <p>{imageName}</p> // Show the file name if no image preview
-        ) : (
-          <p>No image selected</p>
-        )}
-      </div>
-
       <button
         className="analyze-button analyze-large"
         onClick={analyzeFood}
