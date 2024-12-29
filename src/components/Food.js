@@ -30,7 +30,7 @@ const Food = () => {
     const file = e.target.files[0];
     if (file) {
       setImage(file);
-      setImagePreview(URL.createObjectURL(file));
+      setImagePreview(URL.createObjectURL(file)); // Preview image before analysis
     } else {
       alert("No file selected. Please choose an image.");
     }
@@ -76,7 +76,6 @@ const Food = () => {
       alert("Unable to access camera. Please check permissions.");
     }
   };
-  
 
   const getLocation = () => {
     return new Promise((resolve, reject) => {
@@ -248,7 +247,6 @@ const Food = () => {
       alert("No analysis result to add to inventory.");
     }
   };
-  
 
   return (
     <div className="food-container">
