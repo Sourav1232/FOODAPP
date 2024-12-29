@@ -98,14 +98,18 @@ html, body {
   flex-direction: column;
   color: white;
   font-weight: bold;
+  padding: 10px; /* Add padding to ensure text is not too close to the edges */
+  box-sizing: border-box; /* Ensures padding doesn’t affect the size */
 }
 
 .item-count {
-  font-size: 32px;
+  font-size: 28px; /* Adjust the font size to fit better */
+  margin: 0; /* Ensure no margin between items */
 }
 
 .item-label {
-  font-size: 14px;
+  font-size: 14px; /* Adjust label size */
+  margin-top: 5px; /* Ensure the label doesn't overlap the count */
 }
 
 .legend {
@@ -186,6 +190,14 @@ html, body {
     height: 120px;
   }
 
+  .item-count {
+    font-size: 24px;
+  }
+
+  .item-label {
+    font-size: 12px;
+  }
+
   .info-box {
     width: 48%;
   }
@@ -218,6 +230,15 @@ html, body {
   .circle-chart {
     width: 100px;
     height: 100px;
+    padding: 8px; /* Adjust padding for smaller charts */
+  }
+
+  .item-count {
+    font-size: 20px; /* Smaller font size for the count */
+  }
+
+  .item-label {
+    font-size: 12px; /* Adjust font size for the label */
   }
 
   .info-box {
@@ -226,7 +247,7 @@ html, body {
   }
 
   .item-count {
-    font-size: 28px;
+    font-size: 24px;
   }
 
   .item-label {
