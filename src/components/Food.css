@@ -15,11 +15,11 @@ html, body {
     padding: 40px;
     border-radius: 15px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    width: 60%;
+    width: 80%;
     max-width: 500px;
-    margin: 0 auto; /* Center horizontally with no vertical margin */
+    margin: 0 auto;
     position: relative;
-    top: 0;  /* No offset from top */
+    top: 0;
 }
 
 /* Header section adjustment */
@@ -116,7 +116,6 @@ html, body {
     margin-top: 20px;
     border: 1px solid #d0e6d1; /* Subtle border to add definition */
 }
-
 
 .result-container {
     margin-top: 10px;
@@ -231,29 +230,84 @@ html, body {
         max-width: 300px;
     }
 }
+
 /* Style for detailed analysis points */
 .analysis-points {
-    list-style-type: none; /* No default list styling */
-    margin: 10px 0 0 0; /* Remove default margins */
+    list-style-type: none;
+    margin: 10px 0 0 0;
     padding: 0;
-    text-align: left; /* Align everything to the left */
+    text-align: left;
 }
 
 .main-point {
-    margin-top: 10px; /* Add space above each main point */
-    font-size: 1.1rem; /* Slightly larger font for main points */
-    color: #2c3e50; /* Darker color for emphasis */
+    margin-top: 10px;
+    font-size: 1.1rem;
+    color: #2c3e50;
 }
 
 .sub-point {
-    margin-left: 20px; /* Indent sub-points */
-    font-size: 1rem; /* Standard font size for sub-points */
-    color: #34495e; /* Slightly lighter color */
+    margin-left: 20px;
+    font-size: 1rem;
+    color: #34495e;
 }
 
 .regular-point {
-    margin-left: 40px; /* Further indent for additional levels */
-    font-size: 0.95rem; /* Slightly smaller font */
-    color: #7f8c8d; /* Neutral color for extra details */
+    margin-left: 40px;
+    font-size: 0.95rem;
+    color: #7f8c8d;
 }
 
+/* Mobile Styles (Below 480px) */
+@media (max-width: 480px) {
+    .food-container {
+        width: 90%;
+        padding: 20px;
+    }
+
+    .food-header {
+        padding: 40px 15px;
+    }
+
+    .food-title {
+        font-size: 1.8rem;
+    }
+
+    .food-description {
+        font-size: 1rem;
+        padding: 0 10px;
+    }
+
+    .file-input {
+        width: 100%;
+        margin-bottom: 15px;
+    }
+
+    .analyze-button, 
+    .reset-button {
+        width: 90%;
+        padding: 10px;
+        font-size: 0.9rem;
+    }
+
+    .image-preview-large {
+        max-height: 200px;
+    }
+
+    .analysis-result {
+        padding: 15px;
+        font-size: 0.9rem;
+    }
+
+    .result-text {
+        font-size: 1.2rem;
+    }
+
+    .result-details li {
+        font-size: 0.9rem;
+    }
+
+    .dot-loader span {
+        width: 10px;
+        height: 10px;
+    }
+}
