@@ -22,6 +22,7 @@ const database = getDatabase(app);
 const Food = () => {
   const [image, setImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
+  const [imageName, setImageName] = useState(""); // State to store image name
   const [result, setResult] = useState(null);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false); // Track loading state
@@ -31,6 +32,7 @@ const Food = () => {
     if (file) {
       setImage(file);
       setImagePreview(URL.createObjectURL(file));
+      setImageName(file.name); // Set the file name after upload
     } else {
       alert("No file selected. Please choose an image.");
     }
@@ -48,6 +50,7 @@ const Food = () => {
       if (file) {
         setImage(file); // Store the file in the state
         setImagePreview(URL.createObjectURL(file)); // Show the image preview
+        setImageName(file.name); // Set the file name after capture
         console.log("Captured image:", file); // Log to confirm the file is selected
       } else {
         alert("No file selected. Please capture an image.");
@@ -161,6 +164,7 @@ const Food = () => {
     setImagePreview(null);
     setResult(null);
     setError(null);
+    setImageName(""); // Reset image name when resetting
   };
 
   const addToInventory = () => {
@@ -205,6 +209,18 @@ const Food = () => {
           📷 Capture from Camera
         </button>
       </div>
+
+      {/* Image preview or name */}
+      <div className="file-preview">
+        {imagePreview ? (
+          <img className="image-preview" src={imagePreview} alt="Captured" />
+        ) : imageName ? (
+          <p>{imageName}</p> // Show the file name if no image preview
+        ) : (
+          <p>No image selected</p>
+        )}
+      </div>
+
       <button
         className="analyze-button analyze-large"
         onClick={analyzeFood}

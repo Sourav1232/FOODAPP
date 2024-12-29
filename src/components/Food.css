@@ -312,3 +312,17 @@ html, body {
         height: 10px;
     }
 }
+.file-preview {
+    border: 2px solid #333;
+    padding: 10px;
+    margin-top: 10px;
+    text-align: center;
+    font-size: 14px;
+  }
+  
+  .image-preview {
+    max-width: 100%;
+    height: auto;
+    margin-top: 10px;
+  }
+  
