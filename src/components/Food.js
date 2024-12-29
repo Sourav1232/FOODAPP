@@ -38,32 +38,45 @@ const Food = () => {
 
   const handleCameraCapture = async () => {
     try {
+      // Request access to the camera (video stream)
       const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+  
+      // Create a video element to access the camera stream
       const videoElement = document.createElement("video");
       videoElement.srcObject = stream;
+      
+      // Play the video feed
       videoElement.play();
-
+  
+      // Create a canvas to capture the image
       const canvas = document.createElement("canvas");
       const context = canvas.getContext("2d");
-
-      videoElement.addEventListener("canplay", () => {
+  
+      // Wait for the video to load metadata and capture the image
+      videoElement.onloadedmetadata = () => {
+        // Set canvas size to video size
         canvas.width = videoElement.videoWidth;
         canvas.height = videoElement.videoHeight;
+  
+        // Capture the image from the video feed
         context.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
-        canvas.toBlob(
-          (blob) => {
-            setImage(blob);
-            setImagePreview(canvas.toDataURL("image/jpeg"));
-            stream.getTracks().forEach((track) => track.stop());
-          },
-          "image/jpeg"
-        );
-      });
+  
+        // Convert the canvas to a Blob (image data)
+        canvas.toBlob((blob) => {
+          // Set the captured image (blob) as the source for preview
+          setImage(blob);
+          setImagePreview(canvas.toDataURL("image/jpeg")); // Display as preview
+  
+          // Stop the video stream after capturing the image
+          stream.getTracks().forEach((track) => track.stop());
+        }, "image/jpeg");
+      };
     } catch (error) {
       console.error("Error accessing camera:", error);
       alert("Unable to access camera. Please check permissions.");
     }
   };
+  
 
   const getLocation = () => {
     return new Promise((resolve, reject) => {
