@@ -56,9 +56,7 @@ const Home = () => {
           totalItems,
           categories,
         });
-      } else {
-        setError("No data available in the inventory.");
-      }
+      } 
     } catch (error) {
       setError("Error fetching inventory data: " + error.message);
       console.error("Error fetching inventory data from Firebase:", error);
