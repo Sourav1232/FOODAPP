@@ -121,23 +121,23 @@ const Home = () => {
             className="inventory-summary button-card"
             onClick={handleRedirectToInventory}
           >
-            <h2>Inventory</h2>
+            <h2>INVENTORY</h2>
             <div className="circle-chart" style={getCategoryColorStyle()}>
               <p className="item-count">{inventoryData.totalItems}</p>
-              <p className="item-label">Items</p>
+              <p className="item-label">ITEMS</p>
             </div>
             <div className="legend">
               <div>
-                <span className="dot others"></span> Others ({inventoryData.categories.others})
+                <span className="dot others"></span> OTHERS ({inventoryData.categories.others})
               </div>
               <div>
-                <span className="dot fruits"></span> Fruits ({inventoryData.categories.fruits})
+                <span className="dot fruits"></span> FRUITS ({inventoryData.categories.fruits})
               </div>
               <div>
-                <span className="dot dairy"></span> Dairy ({inventoryData.categories.dairy})
+                <span className="dot dairy"></span> DAIRY ({inventoryData.categories.dairy})
               </div>
               <div>
-                <span className="dot vegetables"></span> Vegetables ({inventoryData.categories.vegetables})
+                <span className="dot vegetables"></span> VEGETABLES ({inventoryData.categories.vegetables})
               </div>
             </div>
           </div>
@@ -147,7 +147,7 @@ const Home = () => {
               className="info-box button-card"
               onClick={handleRedirectToFoodAnalyzer}
             >
-              <h3>AI Food Analyzer</h3>
+              <h3>AI FOOD ANALYZER</h3>
               <img
                 src="https://img.icons8.com/color/64/camera.png"
                 alt="Sensor Data"
