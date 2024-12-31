@@ -36,38 +36,46 @@ const Food = () => {
     }
   };
 
-  const handleCameraCapture = () => {
-    // Create a hidden input element to trigger the camera app
-    const cameraInput = document.createElement("input");
-    cameraInput.type = "file";
-    cameraInput.accept = "image/*";
-    cameraInput.capture = "camera"; // Opens the camera directly on supported devices
+  const handleCameraCapture = async () => {
+    try {
+      // Request access to the camera (video stream)
+      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
   
-    // Listen for file selection
-    cameraInput.onchange = (event) => {
-      const file = event.target.files[0];
-      if (file) {
-        // Assign a temporary name to the file
-        const tempName = `Captured_${new Date().getTime()}.jpg`;
-        const updatedFile = new File([file], tempName, { type: file.type });
+      // Create a video element to access the camera stream
+      const videoElement = document.createElement("video");
+      videoElement.srcObject = stream;
+      
+      // Play the video feed
+      videoElement.play();
   
-        setImage(updatedFile);
-        setImagePreview(URL.createObjectURL(updatedFile)); // Display the captured image preview
+      // Create a canvas to capture the image
+      const canvas = document.createElement("canvas");
+      const context = canvas.getContext("2d");
   
-        // Display the temporary name in the black box
-        const fileNameDisplay = document.querySelector(".file-input-label");
-        if (fileNameDisplay) {
-          fileNameDisplay.textContent = tempName;
-        }
-      } else {
-        alert("No image captured. Please try again.");
-      }
-    };
+      // Wait for the video to load metadata and capture the image
+      videoElement.onloadedmetadata = () => {
+        // Set canvas size to video size
+        canvas.width = videoElement.videoWidth;
+        canvas.height = videoElement.videoHeight;
   
-    // Trigger the click event to open the camera
-    cameraInput.click();
+        // Capture the image from the video feed
+        context.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
+  
+        // Convert the canvas to a Blob (image data)
+        canvas.toBlob((blob) => {
+          // Set the captured image (blob) as the source for preview
+          setImage(blob);
+          setImagePreview(canvas.toDataURL("image/jpeg")); // Display as preview
+  
+          // Stop the video stream after capturing the image
+          stream.getTracks().forEach((track) => track.stop());
+        }, "image/jpeg");
+      };
+    } catch (error) {
+      console.error("Error accessing camera:", error);
+      alert("Unable to access camera. Please check permissions.");
+    }
   };
-  
 
   const getLocation = () => {
     return new Promise((resolve, reject) => {
@@ -249,18 +257,17 @@ const Food = () => {
         Upload or capture food photos to check for spoilage. Our AI ensures
         quality by detecting signs of freshness or decay.
       </p>
-      <div class="upload-container">
-  <input
-    class="file-input"
-    type="file"
-    accept="image/*"
-    onChange={handleImageUpload}
-  />
-  <button class="analyze-button" onClick={handleCameraCapture}>
-    📷 Capture from Camera
-  </button>
-</div>
-
+      <div className="upload-container">
+        <input
+          className="file-input"
+          type="file"
+          accept="image/*"
+          onChange={handleImageUpload}
+        />
+        <button className="analyze-button" onClick={handleCameraCapture}>
+          📷 Capture from Camera
+        </button>
+      </div>
       <button
         className="analyze-button analyze-large"
         onClick={analyzeFood}
