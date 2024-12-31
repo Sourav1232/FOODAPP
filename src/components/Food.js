@@ -250,7 +250,7 @@ const Food = () => {
         quality by detecting signs of freshness or decay.
       </p>
       <div class="upload-container">
-  <label class="file-input-label">No file selected</label>
+
   <input
     class="file-input"
     type="file"
@@ -260,6 +260,7 @@ const Food = () => {
   <button class="analyze-button" onClick={handleCameraCapture}>
     📷 Capture from Camera
   </button>
+  <label class="file-input-label">No file selected</label>
 </div>
 
       <button
