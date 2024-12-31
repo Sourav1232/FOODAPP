@@ -163,6 +163,24 @@ html, body {
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
+.analysis-points {
+    list-style: none;
+    margin: 10px 0 0 0;
+    padding: 0;
+    text-align: left;
+}
+
+.analysis-item {
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #444;
+}
+
+.analysis-item strong {
+    color: #000;
+}
+
 /* Dot Loader Styles */
 .dot-loader {
     display: flex;
@@ -233,13 +251,6 @@ html, body {
 }
 
 /* Style for detailed analysis points */
-.analysis-points {
-    list-style-type: none;
-    margin: 10px 0 0 0;
-    padding: 0;
-    text-align: left;
-}
-
 .main-point {
     margin-top: 10px;
     font-size: 1.1rem;

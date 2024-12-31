@@ -306,18 +306,23 @@ const Food = () => {
             </ul>
 
             {result.analysis && (
-              <div className="original-response">
-                <p className="result-text">📝 Detailed Analysis:</p>
-                <ul className="analysis-points">
-                  {result.analysis
-                    .split("\n")
-                    .filter((point) => point.trim() !== "")
-                    .map((point, index) => (
-                      <li key={index}>{point.trim()}</li>
-                    ))}
-                </ul>
-              </div>
-            )}
+  <div className="original-response">
+    <p className="result-text">📝 Detailed Analysis:</p>
+    <ul className="analysis-points">
+      {result.analysis
+        .split("\n")
+        .filter((point) => point.trim() !== "")
+        .map((point, index) => (
+          <li key={index} className="analysis-item">
+            {point.trim().replace(/^\*+|\*+$/g, "")}
+          </li>
+        ))}
+    </ul>
+  </div>
+)}
+
+
+
           </div>
           <button className="add-to-inventory-button" onClick={addToInventory}>
             ➕ Add to Inventory
