@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
+import { ref, onValue, remove } from "firebase/database"; // Import remove for deletion
+import { database } from "../firebase"; 
 import "./Inventory.css";
-import { ref, onValue } from "firebase/database";
-import { database } from "../firebase"; // Import shared Firebase initialization
 
 const Inventory = () => {
   const [inventory, setInventory] = useState([]);
@@ -21,6 +21,7 @@ const Inventory = () => {
               name: itemName,
               quantity: data[category][itemName].count,
               expiry: data[category][itemName].exp_date,
+              key: `${category}/${itemName}` // Store the key path for deletion
             })),
           }));
           setInventory(formattedInventory);
@@ -49,6 +50,22 @@ const Inventory = () => {
     };
   }, []);
 
+  const handleDelete = (key) => {
+    const itemRef = ref(database, key);
+    remove(itemRef)
+      .then(() => {
+        setInventory((prevInventory) =>
+          prevInventory.map((category) => ({
+            ...category,
+            items: category.items.filter((item) => item.key !== key),
+          }))
+        );
+      })
+      .catch((err) => {
+        setError("Failed to delete item: " + err.message);
+      });
+  };
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -70,6 +87,7 @@ const Inventory = () => {
               <th>Food Item</th>
               <th>Quantity</th>
               <th>Expiry Date</th>
+              <th>Actions</th> {/* New column for actions */}
             </tr>
           </thead>
           <tbody>
@@ -86,18 +104,26 @@ const Inventory = () => {
                       <td>{item.name}</td>
                       <td>{item.quantity}</td>
                       <td>{item.expiry || "N/A"}</td>
+                      <td>
+                        <button
+                          className="delete-button"
+                          onClick={() => handleDelete(item.key)}
+                        >
+                          Delete
+                        </button>
+                      </td>
                     </tr>
                   ))
                 ) : (
                   <tr key={category.category}>
                     <td rowSpan="1">{category.category}</td>
-                    <td colSpan="3">[empty]</td>
+                    <td colSpan="4">[empty]</td>
                   </tr>
                 )
               )
             ) : (
               <tr>
-                <td colSpan="4" style={{ textAlign: "center" }}>
+                <td colSpan="5" style={{ textAlign: "center" }}>
                   No inventory data available.
                 </td>
               </tr>
