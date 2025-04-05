@@ -1,0 +1,138 @@
+/* Container */
+.livecam-container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    background-color: #e5f3e3;
+    padding: 20px;
+    box-sizing: border-box;
+    border-radius: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    margin: 0 auto;
+    width: 100%;
+    animation: fade-in 1s ease-in-out;
+  }
+  
+  /* Header section */
+  .livecam-header {
+    width: 100%;
+    text-align: center;
+    color: #fff;
+    margin-bottom: 15px;
+    background-image: url('./background.jpg');
+    background-size: cover;
+    background-position: center;
+    padding: 40px 0;
+    border-radius: 15px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    animation: slide-down 1s ease-in-out;
+  }
+  
+  .livecam-header h1 {
+    font-size: 2.2rem;
+    margin: 0;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+    letter-spacing: 1px;
+  }
+  
+  /* Description */
+  .livecam-description {
+    font-size: 1rem;
+    margin: 15px 0 25px;
+    max-width: 90%;
+    text-align: center;
+    line-height: 1.5;
+    color: #333;
+    animation: bounce-in 1s ease-in-out;
+  }
+  
+  /* Live feed box */
+  .livecam-feed {
+    width: 100%;
+    max-width: 1000px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ddd;
+    animation: zoom-in 1s ease-in-out;
+  }
+  
+  /* Video styling */
+  .livecam-video {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    border: 2px solid #7d4cff;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .livecam-container {
+      padding: 15px;
+      max-width: 90%;
+    }
+  
+    .livecam-header h1 {
+      font-size: 1.8rem;
+    }
+  
+    .livecam-description {
+      font-size: 0.9rem;
+    }
+  
+    .livecam-feed {
+      padding: 15px;
+    }
+  
+    .livecam-video {
+      border-width: 1px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .livecam-header {
+      padding: 30px 0;
+    }
+  
+    .livecam-header h1 {
+      font-size: 1.6rem;
+    }
+  
+    .livecam-description {
+      font-size: 0.8rem;
+    }
+  
+    .livecam-feed {
+      padding: 10px;
+    }
+  
+    .livecam-video {
+      border-radius: 8px;
+    }
+  }
+  
+  /* Animation keyframes from Home.css */
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  @keyframes slide-down {
+    from { transform: translateY(-20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+  
+  @keyframes bounce-in {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+  
+  @keyframes zoom-in {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+  

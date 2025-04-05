@@ -7,7 +7,6 @@ import "./Home.css";
 const Home = () => {
   const navigate = useNavigate();
 
-  // State to hold the inventory data
   const [inventoryData, setInventoryData] = useState({
     totalItems: 0,
     categories: {
@@ -18,10 +17,8 @@ const Home = () => {
     },
   });
 
-  // State to manage error
   const [error, setError] = useState(null);
 
-  // Function to fetch inventory data from Firebase
   const fetchInventoryData = async () => {
     try {
       const dbRef = ref(database, "/");
@@ -36,11 +33,10 @@ const Home = () => {
           vegetables: 0,
         };
 
-        // Loop through the categories in Firebase and calculate the totals
         for (const category in data) {
           if (data[category] && typeof data[category] === "object") {
             for (const type in data[category]) {
-              const itemCount = parseInt(data[category][type]?.count || 0, 10); // Convert count to integer
+              const itemCount = parseInt(data[category][type]?.count || 0, 10);
               totalItems += itemCount;
 
               if (category === "others") categories.others += itemCount;
@@ -51,7 +47,6 @@ const Home = () => {
           }
         }
 
-        // Set the inventory data to state
         setInventoryData({
           totalItems,
           categories,
@@ -63,12 +58,10 @@ const Home = () => {
     }
   };
 
-  // Fetch inventory data when the component is mounted
   useEffect(() => {
     fetchInventoryData();
   }, []);
 
-  // Redirect functions
   const handleRedirectToInventory = () => {
     navigate("/inventory");
   };
@@ -81,12 +74,14 @@ const Home = () => {
     navigate("/ai-manager");
   };
 
-  // Calculate percentage for each category
+  const handleRedirectToLiveCam = () => {
+    navigate("/live-cam");
+  };
+
   const calculatePercentage = (categoryCount) => {
     return (categoryCount / inventoryData.totalItems) * 100;
   };
 
-  // Calculate the start and end points for each category
   const getCategoryColorStyle = () => {
     const total = inventoryData.totalItems;
     const fruitsPercentage = calculatePercentage(inventoryData.categories.fruits);
@@ -146,7 +141,7 @@ const Home = () => {
             >
               <h3>AI FOOD ANALYZER</h3>
               <img
-                src="https://img.icons8.com/color/64/camera.png"
+                src="https://img.icons8.com/color/64/food.png"
                 alt="Sensor Data"
               />
             </div>
@@ -159,6 +154,17 @@ const Home = () => {
               <img
                 src="https://img.icons8.com/color/64/artificial-intelligence.png"
                 alt="AI Inventory Manager"
+              />
+            </div>
+
+            <div
+              className="info-box button-card"
+              onClick={handleRedirectToLiveCam}
+            >
+              <h3>LIVE CAM</h3>
+              <img
+                src="https://img.icons8.com/color/64/camera.png"
+                alt="Live Cam"
               />
             </div>
           </div>
