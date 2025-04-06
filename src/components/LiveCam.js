@@ -1,26 +1,62 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import './LiveCam.css';
 
 const LiveCam = () => {
+  const videoRef = useRef(null);
+  const canvasRef = useRef(null);
+
+  // Start webcam on mount
+  useEffect(() => {
+    navigator.mediaDevices.getUserMedia({ video: true })
+      .then(stream => {
+        videoRef.current.srcObject = stream;
+      })
+      .catch(err => console.error("Error accessing webcam:", err));
+  }, []);
+
+  // Send frames to backend every 500ms
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (videoRef.current && canvasRef.current) {
+        const ctx = canvasRef.current.getContext('2d');
+        ctx.drawImage(videoRef.current, 0, 0, canvasRef.current.width, canvasRef.current.height);
+        canvasRef.current.toBlob(blob => {
+          if (blob) {
+            const formData = new FormData();
+            formData.append('frame', blob);
+
+            fetch('http://localhost:5000/detect', {
+              method: 'POST',
+              body: formData
+            })
+            .then(res => res.blob())
+            .then(blob => {
+              const url = URL.createObjectURL(blob);
+              document.getElementById('detection-output').src = url;
+            })
+            .catch(err => console.error("Detection error:", err));
+          }
+        }, 'image/jpeg');
+      }
+    }, 500);
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <div className="livecam-container">
-      {/* Header with background image */}
       <header className="livecam-header">
-        <h1>Live Camera Feed</h1>
+        <h1>Live Freshness Detection</h1>
       </header>
 
-      {/* Description */}
       <p className="livecam-description">
-        This feed provides a real-time view from your inventory or kitchen camera. Monitor food freshness and storage conditions live.
+        Camera is analyzing in real time using YOLOv8. Please ensure good lighting.
       </p>
 
-      {/* Camera Feed */}
       <div className="livecam-feed">
-        <img
-          src="http://192.168.1.101:8081/video" // Replace with your actual stream URL
-          alt="Live Camera Feed"
-          className="livecam-video"
-        />
+        <video ref={videoRef} autoPlay muted playsInline className="livecam-video" />
+        <canvas ref={canvasRef} width="640" height="480" style={{ display: 'none' }} />
+        <img id="detection-output" alt="Processed Frame" className="livecam-video" />
       </div>
     </div>
   );
