@@ -25,7 +25,7 @@ const LiveCam = () => {
             const formData = new FormData();
             formData.append('frame', blob);
 
-            fetch('https://yawa-px5z.onrender.com', {
+            fetch('https://yawa-px5z.onrender.com/detect', {
               method: 'POST',
               body: formData
             })
