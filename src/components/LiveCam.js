@@ -4,7 +4,6 @@ import './LiveCam.css';
 const LiveCam = () => {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
-  const imageRef = useRef(null); // Ref for the output image
 
   // Start webcam on mount
   useEffect(() => {
@@ -26,20 +25,26 @@ const LiveCam = () => {
             const formData = new FormData();
             formData.append('frame', blob);
 
-            fetch('https://yawa-px5z.onrender.com/detect', {
+            fetch('https://yawa-px5z.onrender.com', {
               method: 'POST',
               body: formData
             })
             .then(res => res.blob())
             .then(blob => {
-              const url = URL.createObjectURL(blob);
-
-              // Revoke old URL to prevent memory leaks and reduce flickering
-              if (imageRef.current.src) {
-                URL.revokeObjectURL(imageRef.current.src);
-              }
-
-              imageRef.current.src = url;
+              const newUrl = URL.createObjectURL(blob);
+              const imgElement = document.getElementById('detection-output');
+            
+              // Wait for the new image to load before swapping
+              const tempImg = new Image();
+              tempImg.onload = () => {
+                // Swap image only after it’s fully loaded
+                const oldUrl = imgElement.src;
+                imgElement.src = newUrl;
+                if (oldUrl.startsWith('blob:')) {
+                  URL.revokeObjectURL(oldUrl); // clean up old blob URL
+                }
+              };
+              tempImg.src = newUrl;
             })
             .catch(err => console.error("Detection error:", err));
           }
@@ -63,7 +68,7 @@ const LiveCam = () => {
       <div className="livecam-feed">
         <video ref={videoRef} autoPlay muted playsInline className="livecam-video" />
         <canvas ref={canvasRef} width="640" height="480" style={{ display: 'none' }} />
-        <img ref={imageRef} alt="Processed Frame" className="livecam-output" />
+        <img id="detection-output" alt="Processed Frame" className="livecam-video" />
       </div>
     </div>
   );

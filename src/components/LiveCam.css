@@ -145,10 +145,4 @@
     animation: bounce-in 1s ease-in-out;
     font-weight: 500;
   }
-  .livecam-output {
-    width: 640px;
-    height: 480px;
-    object-fit: cover;
-    transition: opacity 0.3s ease-in-out;
-  }
   
