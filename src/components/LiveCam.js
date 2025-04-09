@@ -25,26 +25,14 @@ const LiveCam = () => {
             const formData = new FormData();
             formData.append('frame', blob);
 
-            fetch('https://yawa-px5z.onrender.com/detect', {
+            fetch('https://yawa-px5z.onrender.com', {
               method: 'POST',
               body: formData
             })
             .then(res => res.blob())
             .then(blob => {
-              const newUrl = URL.createObjectURL(blob);
-              const imgElement = document.getElementById('detection-output');
-            
-              // Wait for the new image to load before swapping
-              const tempImg = new Image();
-              tempImg.onload = () => {
-                // Swap image only after it’s fully loaded
-                const oldUrl = imgElement.src;
-                imgElement.src = newUrl;
-                if (oldUrl.startsWith('blob:')) {
-                  URL.revokeObjectURL(oldUrl); // clean up old blob URL
-                }
-              };
-              tempImg.src = newUrl;
+              const url = URL.createObjectURL(blob);
+              document.getElementById('detection-output').src = url;
             })
             .catch(err => console.error("Detection error:", err));
           }
