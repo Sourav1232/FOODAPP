@@ -14,35 +14,6 @@ const LiveCam = () => {
       .catch(err => console.error("Error accessing webcam:", err));
   }, []);
 
-  // Send frames to backend every 500ms
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (videoRef.current && canvasRef.current) {
-        const ctx = canvasRef.current.getContext('2d');
-        ctx.drawImage(videoRef.current, 0, 0, canvasRef.current.width, canvasRef.current.height);
-        canvasRef.current.toBlob(blob => {
-          if (blob) {
-            const formData = new FormData();
-            formData.append('frame', blob);
-
-            fetch('https://yawa-px5z.onrender.com', {
-              method: 'POST',
-              body: formData
-            })
-            .then(res => res.blob())
-            .then(blob => {
-              const url = URL.createObjectURL(blob);
-              document.getElementById('detection-output').src = url;
-            })
-            .catch(err => console.error("Detection error:", err));
-          }
-        }, 'image/jpeg');
-      }
-    }, 500);
-
-    return () => clearInterval(interval);
-  }, []);
-
   return (
     <div className="livecam-container">
       <header className="livecam-header">
@@ -56,10 +27,15 @@ const LiveCam = () => {
       <div className="livecam-feed">
         <video ref={videoRef} autoPlay muted playsInline className="livecam-video" />
         <canvas ref={canvasRef} width="640" height="480" style={{ display: 'none' }} />
-        <img id="detection-output" alt="Processed Frame" className="livecam-video" />
+        <img
+          id="detection-output"
+          alt="Processed Frame"
+          className="livecam-video"
+          src="https://yawa-px5z.onrender.com/stream"
+        />
       </div>
     </div>
   );
 };
 
-export default LiveCam; 
+export default LiveCam;
