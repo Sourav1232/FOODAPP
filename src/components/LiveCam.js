@@ -62,4 +62,4 @@ const LiveCam = () => {
   );
 };
 
-export default LiveCam;
+export default LiveCam; 
