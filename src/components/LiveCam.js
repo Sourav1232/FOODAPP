@@ -26,7 +26,7 @@ const LiveCam = () => {
 
             console.log("📤 Sending frame to backend...");
 
-            fetch('https://yawa-px5z.onrender.com/detect', {
+            fetch('http://localhost:5000/detect', {
               method: 'POST',
               body: formData
             })
