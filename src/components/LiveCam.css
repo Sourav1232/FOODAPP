@@ -145,4 +145,108 @@
     animation: bounce-in 1s ease-in-out;
     font-weight: 500;
   }
-  
+  /* Conveyor Belt Controls */
+.conveyor-controls {
+  width: 100%;
+  margin-top: 25px;
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  animation: zoom-in 1s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.conveyor-controls h2 {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+  color: #4caf50;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
+}
+
+.control-buttons {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.control-buttons button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: 600;
+  background-color: #7d4cff;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.control-buttons button:hover {
+  background-color: #5a2ecc;
+  transform: translateY(-2px);
+}
+
+.speed-control {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.speed-control label {
+  font-size: 1rem;
+  color: #333;
+  font-weight: 500;
+}
+
+.speed-control input[type="number"] {
+  width: 80px;
+  padding: 8px;
+  border: 2px solid #7d4cff;
+  border-radius: 6px;
+  outline: none;
+  font-size: 1rem;
+  text-align: center;
+}
+
+.speed-control button {
+  padding: 8px 18px;
+  font-size: 1rem;
+  font-weight: 600;
+  background-color: #4caf50;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.speed-control button:hover {
+  background-color: #388e3c;
+  transform: translateY(-2px);
+}
+
+/* Extra responsiveness */
+@media (max-width: 480px) {
+  .control-buttons {
+      gap: 10px;
+  }
+
+  .control-buttons button,
+  .speed-control button {
+      font-size: 0.9rem;
+      padding: 8px 16px;
+  }
+
+  .speed-control input[type="number"] {
+      width: 60px;
+  }
+}
