@@ -4,8 +4,8 @@ import './LiveCam.css';
 const LiveCam = () => {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
-  const [speed, setSpeed] = useState(20);
-  const [toastMessage, setToastMessage] = useState('');
+  const [speed, setSpeed] = useState(20); // Default speed
+  const [toastMessage, setToastMessage] = useState(''); // For Snackbar Toast
 
   useEffect(() => {
     navigator.mediaDevices.getUserMedia({ video: true })
@@ -57,10 +57,10 @@ const LiveCam = () => {
   }, []);
 
   const sendCommand = (command) => {
-    console.log(`📤 Sending command to Firebase motor_control/command: "${command}"`);
+    console.log(`📤 Sending command to Firebase: "${command}"`);
 
     fetch('https://foodai-7ebf0-default-rtdb.firebaseio.com/motor_control/command.json', {
-      method: 'PUT',   // Update only the command value
+      method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
       },
@@ -68,12 +68,12 @@ const LiveCam = () => {
     })
     .then(res => {
       if (res.ok) {
-        console.log(`✅ Command "${command}" sent successfully to motor_control/command`);
+        console.log(`✅ Command "${command}" sent successfully to Firebase`);
       } else {
-        console.error(`❌ Failed to send command. Status:`, res.status);
+        console.error(`❌ Failed to send command "${command}". Status:`, res.status);
       }
     })
-    .catch(err => console.error(`❌ Error sending command:`, err));
+    .catch(err => console.error(`❌ Error sending command "${command}":`, err));
   };
 
   const handleSpeedChange = (e) => {
@@ -94,7 +94,7 @@ const LiveCam = () => {
     console.log(`🕹️ ${label} clicked`);
     sendCommand(command);
     setToastMessage(`✅ ${label} command sent`);
-
+    
     setTimeout(() => {
       setToastMessage('');
     }, 2000);
