@@ -59,7 +59,7 @@ const LiveCam = () => {
   const sendCommand = (command) => {
     console.log(`📤 Sending command to Firebase: "${command}"`);
 
-    fetch('https://foodai-7ebf0-default-rtdb.firebaseio.com/motor_control/command.json', {
+    fetch('https://foodai-7ebf0-default-rtdb.firebaseio.com/command.json', {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
