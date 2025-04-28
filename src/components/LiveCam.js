@@ -4,7 +4,8 @@ import './LiveCam.css';
 const LiveCam = () => {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
-  const [speed, setSpeed] = useState(20); // Default speed is 70%
+  const [speed, setSpeed] = useState(20); // Default speed
+  const [toastMessage, setToastMessage] = useState(''); // For Snackbar Toast
 
   useEffect(() => {
     navigator.mediaDevices.getUserMedia({ video: true })
@@ -56,8 +57,9 @@ const LiveCam = () => {
   }, []);
 
   const sendCommand = (command) => {
-    console.log(`📤 Sending command: ${command}`);
-    fetch('https://foodai-7ebf0-default-rtdb.firebaseio.com/', { // replace with your actual Firebase link
+    console.log(`📤 Sending command to Firebase: "${command}"`);
+
+    fetch('https://foodai-7ebf0-default-rtdb.firebaseio.com/command.json', {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
@@ -66,12 +68,12 @@ const LiveCam = () => {
     })
     .then(res => {
       if (res.ok) {
-        console.log("✅ Command sent successfully");
+        console.log(`✅ Command "${command}" sent successfully to Firebase`);
       } else {
-        console.error("❌ Failed to send command");
+        console.error(`❌ Failed to send command "${command}". Status:`, res.status);
       }
     })
-    .catch(err => console.error("❌ Error sending command:", err));
+    .catch(err => console.error(`❌ Error sending command "${command}":`, err));
   };
 
   const handleSpeedChange = (e) => {
@@ -81,6 +83,21 @@ const LiveCam = () => {
 
   const handleSpeedSubmit = () => {
     sendCommand(`s:${speed}`);
+    setToastMessage(`✅ Speed updated to ${speed}%`);
+
+    setTimeout(() => {
+      setToastMessage('');
+    }, 2000);
+  };
+
+  const handleControlCommand = (command, label) => {
+    console.log(`🕹️ ${label} clicked`);
+    sendCommand(command);
+    setToastMessage(`✅ ${label} command sent`);
+    
+    setTimeout(() => {
+      setToastMessage('');
+    }, 2000);
   };
 
   return (
@@ -103,9 +120,9 @@ const LiveCam = () => {
       <div className="conveyor-controls">
         <h2>Conveyor Belt Controls</h2>
         <div className="control-buttons">
-          <button onClick={() => sendCommand("1")}>Start</button>
-          <button onClick={() => sendCommand("0")}>Stop</button>
-          <button onClick={() => sendCommand("2")}>Reverse</button>
+          <button onClick={() => handleControlCommand("1", "Start")}>Start</button>
+          <button onClick={() => handleControlCommand("0", "Stop")}>Stop</button>
+          <button onClick={() => handleControlCommand("2", "Reverse")}>Reverse</button>
         </div>
         <div className="speed-control">
           <label>
@@ -121,6 +138,13 @@ const LiveCam = () => {
           <button onClick={handleSpeedSubmit}>Set Speed</button>
         </div>
       </div>
+
+      {/* Snackbar Toast */}
+      {toastMessage && (
+        <div className="toast">
+          {toastMessage}
+        </div>
+      )}
     </div>
   );
 };
