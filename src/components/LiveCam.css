@@ -250,3 +250,84 @@
       width: 60px;
   }
 }
+.livecam-container {
+  text-align: center;
+  padding: 20px;
+}
+
+.livecam-header h1 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.livecam-description {
+  font-size: 1rem;
+  margin-bottom: 20px;
+}
+
+.livecam-feed {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+
+.livecam-video {
+  width: 320px;
+  height: 240px;
+  border: 2px solid #333;
+  border-radius: 10px;
+}
+
+.conveyor-controls {
+  margin-top: 30px;
+}
+
+.control-buttons button {
+  margin: 10px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border: none;
+  background-color: #4caf50;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.control-buttons button:hover {
+  background-color: #45a049;
+}
+
+.speed-control {
+  margin-top: 20px;
+}
+
+.speed-control input[type="range"] {
+  margin-left: 10px;
+  vertical-align: middle;
+}
+
+/* Snackbar Toast */
+.toast {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #4caf50; /* Green background */
+  color: #fff;
+  padding: 12px 24px;
+  border-radius: 24px;
+  font-size: 16px;
+  opacity: 0.9;
+  z-index: 9999;
+  animation: fadeInOut 2s ease forwards;
+}
+
+@keyframes fadeInOut {
+  0% { opacity: 0; transform: translateX(-50%) translateY(20px); }
+  10% { opacity: 0.9; transform: translateX(-50%) translateY(0); }
+  90% { opacity: 0.9; transform: translateX(-50%) translateY(0); }
+  100% { opacity: 0; transform: translateX(-50%) translateY(20px); }
+}
