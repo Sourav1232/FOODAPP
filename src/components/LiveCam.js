@@ -4,7 +4,7 @@ import './LiveCam.css';
 const LiveCam = () => {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
-  const [speed, setSpeed] = useState(70); // Default speed is 70%
+  const [speed, setSpeed] = useState(20); // Default speed is 70%
 
   useEffect(() => {
     navigator.mediaDevices.getUserMedia({ video: true })
